@@ -23,8 +23,7 @@ node {
 				fi
 				# Compile test files (test folder beside src)
 				mkdir -p test-build
-				javac -cp junit-platform-console-standalone.jar:build -d test-build
-test/*.java
+				javac -cp junit-platform-console-standalone.jar:build -d test-build test/*.java
 				# Run JUnit tests
 				java -jar junit-platform-console-standalone.jar \
 					--class-path build:test-build \
