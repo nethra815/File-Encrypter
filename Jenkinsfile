@@ -2,10 +2,9 @@ node {
     try {
 
         stage('Build') {
-            dir('Password Protection/File-Encrypter') {
+            dir('Password Protection') {
                 sh '''
                     echo "Building Java project..."
-                    echo "Listing workspace contents:"
                     ls
                     mkdir -p build
                     javac -d build src/*.java
@@ -15,27 +14,26 @@ node {
         }
 
         stage('Test') {
-            dir('Password Protection/File-Encrypter') {
+            dir('Password Protection') {
                 sh '''
                     echo "Running JUnit tests..."
 
                     if [ ! -f junit-platform-console-standalone.jar ]; then
-                        echo "Downloading JUnit..."
                         curl -L -o junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
                     fi
 
                     mkdir -p test-build
                     javac -cp junit-platform-console-standalone.jar:build -d test-build test/*.java
 
-                    java -jar junit-platform-console-standalone.jar --class-path build:test-build --scan-class-path
-
-                    echo "JUnit tests executed successfully"
+                    java -jar junit-platform-console-standalone.jar \
+                    --class-path build:test-build \
+                    --scan-class-path
                 '''
             }
         }
 
         stage('Deploy') {
-            dir('Password Protection/File-Encrypter') {
+            dir('Password Protection') {
                 sh '''
                     echo "Packaging application..."
                     jar cf FileEncrypter.jar -C build .
