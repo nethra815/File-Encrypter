@@ -2,7 +2,7 @@ node {
     try {
 
         stage('Build') {
-            dir('Password Protection') {
+            dir('Password Protection/File-Encrypter') {
                 sh '''
                     echo "Building Java project..."
                     echo "Listing workspace contents:"
@@ -15,7 +15,7 @@ node {
         }
 
         stage('Test') {
-            dir('Password Protection') {
+            dir('Password Protection/File-Encrypter') {
                 sh '''
                     echo "Running JUnit tests..."
 
@@ -35,7 +35,7 @@ node {
         }
 
         stage('Deploy') {
-            dir('Password Protection') {
+            dir('Password Protection/File-Encrypter') {
                 sh '''
                     echo "Packaging application..."
                     jar cf FileEncrypter.jar -C build .
